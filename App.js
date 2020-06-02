@@ -8,8 +8,13 @@ export default function App() {
 
   const [courseGoals, setCourseGoals] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
+  
 
   const addGoalHandler = goalTitle => {
+    if (goalTitle.length === 0) {                                  //daca nu se introduce niciun goal, empty string, return la ecran principal, fara sa adauge
+      return;
+    }
+
     setCourseGoals(currentGoals => [
       ...courseGoals, 
       {id: Math.random().toString(), value: goalTitle }
@@ -18,6 +23,7 @@ export default function App() {
   };
 
   const removeGoalHandler = goalId => {
+  
     setCourseGoals(currentGoals => {
       return currentGoals.filter((goal) => goal.id !== goalId);
     });
