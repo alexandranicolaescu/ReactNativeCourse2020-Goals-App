@@ -7,26 +7,35 @@ import GoalInput from './components/GoalInput';
 export default function App() {
 
   const [courseGoals, setCourseGoals] = useState([]);
-  
+  const [isAddMode, setIsAddMode] = useState(false);
 
   const addGoalHandler = goalTitle => {
     setCourseGoals(currentGoals => [
       ...courseGoals, 
       {id: Math.random().toString(), value: goalTitle }
     ]);
+    setIsAddMode(false);                                          // Apare iar ecranul principal, dupa adaugare de new goal
   };
 
   const removeGoalHandler = goalId => {
     setCourseGoals(currentGoals => {
       return currentGoals.filter((goal) => goal.id !== goalId);
     });
+  };
 
+  const CancelGoalAdditionHandler = () => {
+    setIsAddMode(false);
   };
 
   return (
 
     <View style = {styles.screen}>
-      <GoalInput onAddGoal = {addGoalHandler} />
+      <Button title = "Add New Goal" onPress = {() => setIsAddMode(true)} />
+      <GoalInput 
+        visible = {isAddMode} 
+        onAddGoal = {addGoalHandler} 
+        onCancel = {CancelGoalAdditionHandler} 
+      />
 
       <FlatList 
         keyExtractor = {(item, index) => item.id}
@@ -46,7 +55,10 @@ const styles = StyleSheet.create({
 
 
 
-  /*<View style={{                    //flex learning thingy
+  
+});
+
+/*<View style={{                    //flex learning thingy
       padding: 50, 
       flexDirection: 'row', 
       width: '80%', 
@@ -95,4 +107,3 @@ const styles = StyleSheet.create({
 
     </View>
   */
-});
